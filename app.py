@@ -6,20 +6,23 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 
 #mongo
-app.config["MONGO_URI"] = "mongodb://192.168.80.100:27017/temperature"
+app.config["MONGO_URI"] = "mongodb://192.168.56.50:27017/temperature" # Connect to the mongo instance running on the node-red server
 mongo = PyMongo(app)
 
+# Route for the default or index page for the app. Routes to index.html
 @app.route('/')
 @app.route('/index/')
 def index():
     return render_template('index.html')
+
+# The next three routes are for api calls made the the flask server. Will return various temperature data based on the api called
 @app.route("/get_one_temp_api")
 def temp1():
     one_temp = mongo.db.temperature.find_one()
     #print(temp_reading)
     return str(one_temp)
 
-@app.route("/get_ten_temps_api")
+@app.route("/get_ten_temps_api") # Gets 10 temperature readings from mongo, displayed in a JSON format
 def temp10():
     temps = ""
     ten_temps = mongo.db.temperature.find().limit(10)
