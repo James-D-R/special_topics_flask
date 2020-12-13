@@ -21,7 +21,7 @@ pipeline {
          sh 'pwd'
          sh 'ls -las'
          sh 'tar -czvf flaskapi.tar.gz *'
-         sh 'mv flaskapi.tar.gz /home/deploy'
+         sh 'sudo mv flaskapi.tar.gz /home/deploy'
       } 
     }
   }
